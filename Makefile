@@ -15,30 +15,30 @@ LIBS= -L$(LUALIB) -llua5.1 -lm -ldl
 EXPORT= -Wl,-E
 # for Mac OS X comment the previous line above or do 'make EXPORT='
 
-T= a.out
-S= srlua
+TESTBIN= a.out
+RUNNER= srlua
 OBJS= srlua.o
-TEST= test.lua
-BINS= glue srlua
-DEST= /usr/local/bin
+TESTSCRIPT= test.lua
+BINS= glue $(RUNNER)
+BIN_DEST= /usr/local/bin
 
-all:	test
+all: srlua glue
 
 install: $(BINS)
-	install --mode=755 glue $(DEST)
-	install --mode=755 srlua $(DEST)
+	install --mode=755 glue $(BIN_DEST)
+	install --mode=755 $(RUNNER) $(BIN_DEST)
 
-test:	$T
-	./$T *
+test:	$(TESTBIN)
+	./$(TESTBIN) *
 
-$T:	$S $(TEST) glue
-	./glue $S $(TEST) $T
-	chmod +x $T
+$(TESTBIN):	$(RUNNER) $(TESTSCRIPT) glue
+	./glue $(RUNNER) $(TESTSCRIPT) $(TESTBIN)
+	chmod +x $(TESTBIN)
 
-$S:	$(OBJS)
+srlua:	$(OBJS)
 	$(CC) -o $@ $(EXPORT) $(OBJS) $(LIBS)
 
 clean:
-	rm -f $(OBJS) $T $S core core.* a.out *.o glue
+	rm -f $(OBJS) $(TESTBIN) $(RUNNER) core core.* $(TESTBIN) *.o glue
 
 # eof
