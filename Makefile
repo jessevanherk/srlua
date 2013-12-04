@@ -19,8 +19,14 @@ T= a.out
 S= srlua
 OBJS= srlua.o
 TEST= test.lua
+BINS= glue srlua
+DEST= /usr/local/bin
 
 all:	test
+
+install: $(BINS)
+	install --mode=755 glue $(DEST)
+	install --mode=755 srlua $(DEST)
 
 test:	$T
 	./$T *
