@@ -10,6 +10,7 @@
   #include <windows.h>
   #define _PATH_MAX MAX_PATH
 #else
+  #include <linux/limits.h>
   #define _PATH_MAX PATH_MAX
 #endif
 

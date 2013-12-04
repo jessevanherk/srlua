@@ -1,10 +1,10 @@
 # makefile for srlua
 
-# change these to reflect your Lua installation
-LUA= /tmp/lhf/lua-5.2.0
-LUAINC= $(LUA)/src
-LUALIB= $(LUA)/src
-LUABIN= $(LUA)/src
+# JvH - edited to reflect lua 5.1 locations in stock ubuntu.
+LUA= /usr/include/lua5.1
+LUAINC= $(LUA)
+LUALIB= /usr/lib/lua/5.1
+LUABIN= /usr/bin
 
 # these will probably work if Lua has been installed globally
 #LUA= /usr/local
@@ -17,7 +17,7 @@ CC= gcc
 CFLAGS= $(INCS) $(WARN) -O2 $G
 WARN= -ansi -pedantic -Wall -Wextra
 INCS= -I$(LUAINC)
-LIBS= -L$(LUALIB) -llua -lm -ldl
+LIBS= -L$(LUALIB) -llua5.1 -lm -ldl
 EXPORT= -Wl,-E
 # for Mac OS X comment the previous line above or do 'make EXPORT='
 
